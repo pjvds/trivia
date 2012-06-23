@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,16 +28,16 @@ namespace Trivia
 
                 if (rand.Next(9) == 7)
                 {
-                    notAWinner = aGame.wrongAnswer();
+                    notAWinner = aGame.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer();
                 }
                 else
                 {
-                    notAWinner = aGame.wasCorrectlyAnswered();
+                    notAWinner = aGame.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer();
                 }
 
 
 
             } while (notAWinner);
-        }
+	    }
     }
 }
