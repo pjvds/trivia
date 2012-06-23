@@ -147,11 +147,14 @@ namespace UglyTrivia
 
         public bool MarkCurrentAnswerAsCorrectAndMoveToNextPlayer()
         {
-            if (inPenaltyBox[currentPlayerIndex])
+            Console.WriteLine("Answer was correct!!!!");
+			
+			if (inPenaltyBox[currentPlayerIndex])
             {
                 if (isGettingOutOfPenaltyBox)
                 {
-                    Console.WriteLine("Answer was correct!!!!");
+					inPenaltyBox[currentPlayerIndex] = false;
+
                     playerCoins[currentPlayerIndex]++;
                     Console.WriteLine(playerNames[currentPlayerIndex]
                             + " now has "
