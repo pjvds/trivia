@@ -18,18 +18,18 @@ namespace UglyTrivia
 
         List<string> playerNames = new List<string>();
 
-        int[] playerCurrentPlaces = new int[MAX_NUM_PLAYERS];
-        int[] playerCoins = new int[MAX_NUM_PLAYERS];
+        internal int[] playerCurrentPlaces = new int[MAX_NUM_PLAYERS];
+        internal int[] playerCoins = new int[MAX_NUM_PLAYERS];
 
-        bool[] inPenaltyBox = new bool[MAX_NUM_PLAYERS];
+        internal bool[] inPenaltyBox = new bool[MAX_NUM_PLAYERS];
 
         LinkedList<string> popQuestions = new LinkedList<string>();
         LinkedList<string> scienceQuestions = new LinkedList<string>();
         LinkedList<string> sportsQuestions = new LinkedList<string>();
         LinkedList<string> rockQuestions = new LinkedList<string>();
 
-        int currentPlayerIndex = 0;
-        bool isGettingOutOfPenaltyBox;
+        internal int currentPlayerIndex = 0;
+        internal bool isGettingOutOfPenaltyBox;
 
         public Game()
         {
