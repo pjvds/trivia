@@ -50,7 +50,7 @@ namespace Trivia
 			Game game = createGameWithTwoPlayers ();
 			game.Roll (4);
 			game.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.That (game.IsCurrentPlayerInPenaltyBox(), Is.True);
+			Assert.That (game.IsPreviousPlayerInPenaltyBox(), Is.True);
 		}
 	
 		[Test]
@@ -59,7 +59,7 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer();
-			Assert.IsFalse (g.IsCurrentPlayerInPenaltyBox());
+			Assert.IsFalse (g.IsPreviousPlayerInPenaltyBox());
 		}
 	
 		[Test]
@@ -68,12 +68,12 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
+			Assert.IsTrue (g.IsPreviousPlayerInPenaltyBox());
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
-			Assert.IsFalse (g.IsCurrentPlayerInPenaltyBox());
+			Assert.IsFalse (g.IsPreviousPlayerInPenaltyBox());
 		}
 
 		[Test]
@@ -82,12 +82,31 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
+			Assert.IsTrue (g.IsPreviousPlayerInPenaltyBox());
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
+			Assert.IsTrue (g.IsPreviousPlayerInPenaltyBox());
+		}
+
+		[Test]
+		public void addThrowsInvalidOperationExceptionWhenMaxNumOfPlayersHasBeenReached ()
+		{
+			bool didThrow = false;
+			Game g = new Game ();
+
+			for (int i = 0; i < Game.MAX_NUM_PLAYERS; i++) {
+				g.Add (i.ToString ());
+			}
+
+			try {
+				g.Add ("x");
+			} catch (InvalidOperationException) {
+				didThrow = true;
+			}
+
+			Assert.That (didThrow, Is.True);
 		}
 	
 		[Test]

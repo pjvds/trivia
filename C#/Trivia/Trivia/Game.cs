@@ -7,9 +7,9 @@ namespace UglyTrivia
 {
     public class Game
     {
-		const int MAX_NUM_PLAYERS = 6;
-		const int BOARD_SIZE = 12;
-		const int COINS_TO_WIN = 6;
+		public const int MAX_NUM_PLAYERS = 6;
+		public const int BOARD_SIZE = 12;
+		public const int COINS_TO_WIN = 6;
 
 		const string POP_CATEGORY = "Pop";
 		const string SCIENCE_CATEGORY = " Science";
@@ -49,10 +49,14 @@ namespace UglyTrivia
 
         public bool Add(String playerName)
         {
+			if(GetNumberOfPlayers() == MAX_NUM_PLAYERS) throw new InvalidOperationException("The maximum number of players has been reached.");
+
+			int newPlayerIndex = GetNumberOfPlayers();
+
    			playerNames.Add(playerName);
-            playerCurrentPlaces[GetNumberOfPlayers()] = 0;
-            playerCoins[GetNumberOfPlayers()] = 0;
-            inPenaltyBox[GetNumberOfPlayers()] = false;
+            playerCurrentPlaces[newPlayerIndex] = 0;
+            playerCoins[newPlayerIndex] = 0;
+            inPenaltyBox[newPlayerIndex] = false;
 
             Console.WriteLine(playerName + " was added");
             Console.WriteLine("They are player number " + playerNames.Count);
@@ -63,6 +67,14 @@ namespace UglyTrivia
         {
             return playerNames.Count;
         }
+
+		public bool IsPreviousPlayerInPenaltyBox ()
+		{
+			int previousIndex = currentPlayerIndex-1;
+			if(previousIndex < 0) previousIndex = GetNumberOfPlayers() -1;
+
+			return inPenaltyBox[previousIndex];
+		}
 
 		public bool IsCurrentPlayerInPenaltyBox ()
 		{
@@ -191,6 +203,8 @@ namespace UglyTrivia
 
 			currentPlayerIndex++;
             if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
+
+			return didCurrentPlayerWin;
 		}
 
         public bool MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer()
@@ -204,7 +218,7 @@ namespace UglyTrivia
 
         private bool didPlayerWin()
         {
-            return !(playerCoins[currentPlayerIndex] == COINS_TO_WIN);
+            return (playerCoins[currentPlayerIndex] == COINS_TO_WIN);
         }
     }
 }
