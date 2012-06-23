@@ -50,7 +50,7 @@ namespace Trivia
 			Game game = createGameWithTwoPlayers ();
 			game.Roll (4);
 			game.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.That (game.inPenaltyBox [0], Is.True);
+			Assert.That (game.IsCurrentPlayerInPenaltyBox(), Is.True);
 		}
 	
 		[Test]
@@ -59,7 +59,7 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer();
-			Assert.IsFalse (g.inPenaltyBox [0]);
+			Assert.IsFalse (g.IsCurrentPlayerInPenaltyBox());
 		}
 	
 		[Test]
@@ -68,12 +68,12 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.inPenaltyBox [0]);
+			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
-			Assert.IsFalse (g.inPenaltyBox [0]);
+			Assert.IsFalse (g.IsCurrentPlayerInPenaltyBox());
 		}
 
 		[Test]
@@ -82,12 +82,12 @@ namespace Trivia
 			Game g = createGameWithTwoPlayers ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.inPenaltyBox [0]);
+			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
 			g.Roll (3);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
 			g.Roll (2);
 			g.MarkCurrentAnswerAsCorrectAndMoveToNextPlayer ();
-			Assert.IsTrue (g.inPenaltyBox [0]);
+			Assert.IsTrue (g.IsCurrentPlayerInPenaltyBox());
 		}
 	
 		[Test]

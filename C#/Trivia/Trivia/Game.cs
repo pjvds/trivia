@@ -21,7 +21,7 @@ namespace UglyTrivia
         internal int[] playerCurrentPlaces = new int[MAX_NUM_PLAYERS];
         internal int[] playerCoins = new int[MAX_NUM_PLAYERS];
 
-        internal bool[] inPenaltyBox = new bool[MAX_NUM_PLAYERS];
+        private bool[] inPenaltyBox = new bool[MAX_NUM_PLAYERS];
 
         LinkedList<string> popQuestions = new LinkedList<string>();
         LinkedList<string> scienceQuestions = new LinkedList<string>();
@@ -64,12 +64,17 @@ namespace UglyTrivia
             return playerNames.Count;
         }
 
+		public bool IsCurrentPlayerInPenaltyBox ()
+		{
+			return inPenaltyBox[currentPlayerIndex];
+		}
+
         public void Roll(int roll)
         {
             Console.WriteLine(playerNames[currentPlayerIndex] + " is the current player");
             Console.WriteLine("They have rolled a " + roll);
 
-            if (inPenaltyBox[currentPlayerIndex])
+            if (IsCurrentPlayerInPenaltyBox())
             {
                 if (roll % 2 != 0)
                 {
@@ -149,7 +154,7 @@ namespace UglyTrivia
         {
             Console.WriteLine("Answer was correct!!!!");
 			
-			if (inPenaltyBox[currentPlayerIndex])
+			if (IsCurrentPlayerInPenaltyBox())
             {
                 if (isGettingOutOfPenaltyBox)
                 {
