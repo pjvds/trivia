@@ -69,6 +69,11 @@ namespace UglyTrivia
 			return inPenaltyBox[currentPlayerIndex];
 		}
 
+		public bool RollGetsPlayerOutOfPenaltyBox (int roll)
+		{
+			return roll % 2 != 0;
+		}
+
         public void Roll(int roll)
         {
             Console.WriteLine(playerNames[currentPlayerIndex] + " is the current player");
@@ -76,7 +81,7 @@ namespace UglyTrivia
 
             if (IsCurrentPlayerInPenaltyBox())
             {
-                if (roll % 2 != 0)
+                if (RollGetsPlayerOutOfPenaltyBox(roll))
                 {
                     isGettingOutOfPenaltyBox = true;
 
@@ -165,19 +170,7 @@ namespace UglyTrivia
                             + " now has "
                             + playerCoins[currentPlayerIndex]
                             + " Player Coins.");
-
-                    bool winner = didPlayerNotWin();
-                    currentPlayerIndex++;
-                    if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
-
-                    return winner;
-                }
-                else
-                {
-                    currentPlayerIndex++;
-                    if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
-                    return true;
-                }
+				}
             }
             else
             {
@@ -187,14 +180,18 @@ namespace UglyTrivia
                         + " now has "
                         + playerCoins[currentPlayerIndex]
                         + " Player Coins.");
-
-                bool winner = didPlayerNotWin();
-                currentPlayerIndex++;
-                if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
-
-                return winner;
             }
+
+            return checkWinAndMoveToNextPlayer();
         }
+
+		private bool checkWinAndMoveToNextPlayer ()
+		{
+			var didCurrentPlayerWin = didPlayerWin();
+
+			currentPlayerIndex++;
+            if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
+		}
 
         public bool MarkCurrentAnswerAsIncorrectAndMoveToNextPlayer()
         {
@@ -202,12 +199,10 @@ namespace UglyTrivia
             Console.WriteLine(playerNames[currentPlayerIndex] + " was sent to the penalty box");
             inPenaltyBox[currentPlayerIndex] = true;
 
-            currentPlayerIndex++;
-            if (currentPlayerIndex == playerNames.Count) currentPlayerIndex = 0;
-            return true;
+			return checkWinAndMoveToNextPlayer();
         }
 
-        private bool didPlayerNotWin()
+        private bool didPlayerWin()
         {
             return !(playerCoins[currentPlayerIndex] == COINS_TO_WIN);
         }

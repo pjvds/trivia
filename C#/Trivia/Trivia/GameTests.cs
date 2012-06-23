@@ -115,9 +115,9 @@ namespace Trivia
 		{
 			Game g = createGameWithTwoPlayers ();
 			for (int i = 0; i < 10; i++) {
-				Assert.IsTrue (rollAndGiveCorrectAnswer (g));
+				Assert.IsFalse (rollAndGiveCorrectAnswer (g));
 			}
-			Assert.IsFalse (rollAndGiveCorrectAnswer (g));
+			Assert.IsTrue (rollAndGiveCorrectAnswer (g));
 		}
 	
 		private bool rollAndGiveCorrectAnswer (Game g)
